@@ -1,7 +1,71 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			body {
+				display: grid;
+  				grid-template-columns: 1fr 1fr;
+  				grid-auto-rows: 100vh;
+				place-items: center;
+				font-family: sans-serif;
+			}
+			.btn {
+				border: 1px black solid;
+				display: inline-block;
+				transition: background .3s;
+				width: 400px;
+				text-align: center;
+				padding: 40px;
+				font-size: 40px;
+			}
+			.btn:hover {
+				background: lightgray;
+				cursor: pointer;
+			}
+			.disabled {
+				background: lightgray;
+			}
+			.disabled:hover {
+				cursor: not-allowed;
+			}
+		</style>
+	</head>
 	<body>
-		<h1>Hello World</h1>
-		<p>I'm hosted with GitHub Pages.</p>
+		<div class="btn" data-label="Række 1, V" data-value-max="110 kr" data-chance-of-max="1"></div>
+		<div class="btn" data-label="Række 1, H" data-value-max="114 kr" data-value-min="19 kr" data-chance-of-max="0.97"></div>
+		<div class="btn" data-label="Række 2, V" data-value-max="115 kr" data-chance-of-max="1"></div>
+		<div class="btn" data-label="Række 2, H" data-value-max="256 kr" data-value-min="81 kr" data-chance-of-max="0.1"></div>
+		<div class="btn" data-label="Række 3, V" data-value-max="68 kr" data-chance-of-max="1"></div>
+		<div class="btn" data-label="Række 3, H" data-value-max="73 kr" data-value-min="-85 kr" data-chance-of-max="0.96"></div>
+		<div class="btn" data-label="Række 4, V" data-value-max="-41 kr" data-chance-of-max="1"></div>
+		<div class="btn" data-label="Række 4, H" data-value-max="13 kr" data-value-min="-43 kr" data-chance-of-max="0.05"></div>
+		<div class="btn" data-label="Række 5, V" data-value-max="22 kr" data-chance-of-max="1"></div>
+		<div class="btn" data-label="Række 5, H" data-value-max="30 kr" data-value-min="-72 kr" data-chance-of-max="0.93"></div>
+		<div class="btn" data-label="Række 6, V" data-value-max="70 kr" data-chance-of-max="1"></div>
+		<div class="btn" data-label="Række 6, H" data-value-max="165 kr" data-value-min="69 kr" data-chance-of-max="0.01"></div>
 	</body>
+
+	<script type="text/javascript">
+		document.querySelectorAll(".btn").forEach(function(el) {
+			el.innerHTML = el.getAttribute("data-label");
+
+			el.addEventListener("click", (ev) => {
+				if(!el.classList.contains("disabled")) {
+					el.classList.add("disabled");
+
+					if (Math.random() < el.getAttribute("data-chance-of-max") * 1) {
+						el.innerHTML = el.getAttribute("data-value-max");
+					} else {
+						el.innerHTML = el.getAttribute("data-value-min");
+					}
+
+					setTimeout(function() {
+						el.classList.remove("disabled");
+						el.innerHTML = el.getAttribute("data-label");
+					}, 1000);
+				}
+            });
+          });
+	</script>
 </html>
